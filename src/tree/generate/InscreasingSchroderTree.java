@@ -50,7 +50,7 @@ public class InscreasingSchroderTree {
 	}
 	
 	public static void main(String[] args) {
-		MakeGraph.makeGraph("tree/test1.dot", treeBuilder(50));
+		MakeGraph.makeGraph("tree/test3.dot", treeBuilder(1000));
 	}
 	
 }

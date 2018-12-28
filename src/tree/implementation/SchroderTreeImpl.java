@@ -11,7 +11,7 @@ public class SchroderTreeImpl implements SchroderTree {
 	private boolean isLeaf;
 	
 	public SchroderTreeImpl() {
-		this.isLeaf = false;
+		this.isLeaf = true;
 		this.label = -1;
 		this.children = new ArrayList<>();
 	}
