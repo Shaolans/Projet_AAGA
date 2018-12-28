@@ -1,6 +1,8 @@
 package tree.generate;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -9,6 +11,28 @@ import tree.implementation.SchroderTreeImpl;
 import tree.interfaces.SchroderTree;
 
 public class InscreasingSchroderTree {
+	
+	public static BigInteger[] countCoeff(int n) {
+		if(n <= 0) return null;
+		if(n == 1) {
+			BigInteger[] count = new BigInteger[n];
+			count[0] = BigInteger.ONE;
+			return count;
+		}
+		if(n == 2) {
+			BigInteger[] count = new BigInteger[n];
+			count[0] = BigInteger.ONE;
+			count[1] = BigInteger.ONE;
+			return count;
+		}
+		BigInteger[] count = new BigInteger[n];
+		count[0] = BigInteger.ONE;
+		count[1] = BigInteger.ONE;
+		for(int i = 2; i < n; i++) {
+			count[i] = count[i-1].multiply(new BigInteger((i+1)+"")); 
+		}
+		return count;
+	}
 	
 	public static SchroderTree treeBuilder(int n) {
 		if(n == 1) return new SchroderTreeImpl();
@@ -50,6 +74,7 @@ public class InscreasingSchroderTree {
 	}
 	
 	public static void main(String[] args) {
+		Arrays.stream(countCoeff(20)).forEach(x -> System.out.println(x));
 		MakeGraph.makeGraph("tree/test4.dot", treeBuilder(30));
 	}
 	
