@@ -9,6 +9,7 @@ import tree.interfaces.SchroderTree;
 public class MakeGraph {
 
 	
+	//commande dot -Tpng test1.dot -o test1.png
 	public static void makeGraph(String path, SchroderTree stree) {
 		FileWriter fileWriter = null;
 		PrintWriter printWriter = null;
