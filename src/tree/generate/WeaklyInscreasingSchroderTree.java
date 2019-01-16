@@ -17,10 +17,7 @@ public class WeaklyInscreasingSchroderTree {
 	
 	public static void main(String[] args) {
 		//Arrays.stream(countCoeff(20)).forEach(x -> System.out.println(x));
-
-		MakeGraph.makeGraph("tree/test4.dot", unrankTree(10, coeffs[10].subtract(BigInteger.TEN)));
-		System.out.println(coeffs[9]);
-		System.out.println(coeffs[10]);
+		MakeGraph.makeGraph("tree/test4.dot", unrankTree(10, coeffs[9].subtract(BigInteger.TEN)));
 		
 	}
 	
@@ -40,8 +37,8 @@ public class WeaklyInscreasingSchroderTree {
 	}
 	
 	public static SchroderTree unrankTree(int n, BigInteger s) {
+		System.out.println("UNRANK TREE: "+n+" "+s);
 		if(n == 1) return new SchroderTreeImpl();
-		
 		int k = n-1;
 		BigInteger r = s;
 		while(r.compareTo(BigInteger.ZERO) >= 0) {
@@ -51,19 +48,11 @@ public class WeaklyInscreasingSchroderTree {
 		}
 		
 		k++;
-		System.out.println("bin "+BigIntegerMath.binomial(n-1, k-1).multiply(coeffs[k]));
 		r = r.add(BigIntegerMath.binomial(n-1, k-1).multiply(coeffs[k]));
-		//System.out.println(r+ "g "+s);
 		BigInteger sp = r.mod(coeffs[k]);
-		System.out.println("r "+r);
 		SchroderTree t = unrankTree(k, sp);
 		
-		
-		
-		System.out.println("coeff "+r.divideAndRemainder(coeffs[k])[0]);
-		
 		List<BigInteger> C = unrankComposition(n,k,r.divideAndRemainder(coeffs[k])[0]);
-		//System.out.println(C);
 		
 		substituteTree(t,C);
 		
@@ -73,12 +62,12 @@ public class WeaklyInscreasingSchroderTree {
 	public static List<BigInteger> unrankComposition(int n, int k, BigInteger s){
 		List<BigInteger> C = new ArrayList<>();
 		unrankCompositionRec(n ,k, s, C);
+		System.out.println("UNRANK COMPOSITION: "+C);
 		return C;
 	}
 	
 	public static void unrankCompositionRec(int n, int k, BigInteger s, List<BigInteger> C){
-		System.out.println(n+" "+k+" "+s+" "+C);
-		if(n==k) {
+		if(n == k && s.compareTo(BigInteger.ZERO) == 0) {
 			for(int i = 0; i < k; i++) {
 				C.add(BigInteger.ONE);
 			}
@@ -90,9 +79,8 @@ public class WeaklyInscreasingSchroderTree {
 		
 		BigInteger combinaison = BigIntegerMath.binomial(n-2, k-1);
 		
-		//System.out.println(s_prime+" "+combinaison);
 		
-		if(s_prime.compareTo(combinaison)==-1) {
+		if(s_prime.compareTo(combinaison) == -1) {
 			unrankCompositionRec(n-1, k, s_prime, C);
 			C.add(new BigInteger(C.size()+1+""));
 			
@@ -103,7 +91,6 @@ public class WeaklyInscreasingSchroderTree {
 			C.add(BigInteger.ONE);
 			
 		}
-		//System.out.println(n+" "+k+" "+s+" "+C);
 		
 		
 	}
