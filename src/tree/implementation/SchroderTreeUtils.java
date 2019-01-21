@@ -36,5 +36,24 @@ public class SchroderTreeUtils {
 		}
 		return child_max;
 	}
+	
+	public static int countInternalNode(SchroderTree T) {
+		if(T == null || T.isLeaf()) return 0;
+		int size = 1;
+		for(SchroderTree child: T.getChildren()) {
+			size += countInternalNode(child);
+		}
+		return size;
+	}
+	
+	public static int countLeafNode(SchroderTree T) {
+		if(T == null) return 0;
+		if(T.isLeaf()) return 1;
+		int size = 0;
+		for(SchroderTree child: T.getChildren()) {
+			size += countLeafNode(child);
+		}
+		return size;
+	}
 
 }

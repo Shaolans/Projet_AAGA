@@ -18,10 +18,11 @@ public class WeaklyInscreasingSchroderTree {
 	
 	public static void main(String[] args) {
 		//Arrays.stream(countCoeff(100)).forEach(x -> System.out.println(x));
-		System.out.println(coeffs[15]);
-		MakeGraph.makeGraph("tree/test4.dot", unrankTree(15, new BigInteger("77777")));
-		
-		
+		//MakeGraph.makeGraph("tree/test4.dot", unrankTree(25, new BigInteger("9458653845834583458123123")));
+		for(int i = 0; i < 1; i++) {
+			SchroderTree t = genArbre(25);
+			MakeGraph.makeGraph("tree/test5.dot", t);
+		}
 	}
 	
 	public static BigInteger[] countCoeff(int n) {
@@ -54,20 +55,18 @@ public class WeaklyInscreasingSchroderTree {
 		BigInteger sp = r.mod(coeffs[k]);
 		SchroderTree t = unrankTree(k, sp);
 		List<BigInteger> C = unrankComposition(n,k,r.divideAndRemainder(coeffs[k])[0]);
-		System.out.println(C);
 		substituteTree(t,C);
 		return t;
 	}
 	
 	public static List<BigInteger> unrankComposition(int n, int k, BigInteger s){
 		List<BigInteger> C = new ArrayList<>();
-		//System.out.println(n+" "+k+" "+s);
 		unrankCompositionRec(n ,k, s, C);
 		return C;
 	}
 	
 	public static void unrankCompositionRec(int n, int k, BigInteger s, List<BigInteger> C){
-		if(n == k ) {
+		if(n == k) {
 			for(int i = 0; i < k; i++) {
 				C.add(BigInteger.ONE);
 			}
@@ -146,18 +145,49 @@ public class WeaklyInscreasingSchroderTree {
 		if(n == 1){
 			return new SchroderTreeImpl();
 		}
-		if(n == 2){
-			List<SchroderTree> children = new ArrayList<>();
-			children.add(new SchroderTreeImpl());
-			children.add(new SchroderTreeImpl());
-			return new SchroderTreeImpl(false, 1, children);
+		List<SchroderTree> children = new ArrayList<>();
+		children.add(new SchroderTreeImpl(true, 2, new ArrayList<>()));
+		children.add(new SchroderTreeImpl(true, 2, new ArrayList<>()));
+		SchroderTree t = new SchroderTreeImpl(false, 1, children);
+		if(n == 2) {
+			return t;
 		}
-		BigInteger s = nextRandomBigInteger(coeffs[n]);
-		SchroderTree t = genArbre(n-1);
-		List<BigInteger> C = unrankComposition(n, n-1, s);
-		substituteTree(t, C);
+		List<SchroderTree> leaves = new ArrayList<>(children);
+		List<SchroderTree> tmp;
+		SchroderTree lastadded = t;
+		int l = 3;
+		for(int i = 3; i <= n; i++) {
+			BigInteger s = nextRandomBigInteger(BigIntegerMath.binomial(i-1, i-2));
+			BigInteger value = nextRandomBigInteger(s.add(BigInteger.ONE));
+			List<BigInteger> C = unrankComposition(i, i-1, s);
+			tmp = new ArrayList<>();
+			if(value.compareTo(s) == 0) {
+				lastadded.getChildren().add(new SchroderTreeImpl(true, l, new ArrayList<>()));
+				leaves = SchroderTreeUtils.getLeaves(t);
+			}else {
+				for(int j = 0; j < leaves.size(); j++) {
+					BigInteger nb = C.get(j);
+					if(nb.compareTo(BigInteger.ONE) != 0) {
+						SchroderTree tmptree = leaves.get(j);
+						lastadded = tmptree;
+						tmptree.setisLeaf(false);
+						for(BigInteger k = BigInteger.ZERO; k.compareTo(nb) == -1; k = k.add(BigInteger.ONE)) {
+							SchroderTree leaf = new SchroderTreeImpl();
+							tmptree.getChildren().add(leaf);
+							tmp.add(leaf);
+							leaf.setLabel(l);
+						}
+					}else {
+						tmp.add(leaves.get(j));
+					}
+				}
+				leaves = tmp;
+			}
+			l++;
+		}
 		return t;
 	}
+
 	
 	public static BigInteger nextRandomBigInteger(BigInteger n) {
 	    Random rand = new Random();
