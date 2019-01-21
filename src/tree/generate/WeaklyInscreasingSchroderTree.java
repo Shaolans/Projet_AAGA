@@ -10,14 +10,17 @@ import com.google.common.math.BigIntegerMath;
 
 import tree.graph.MakeGraph;
 import tree.implementation.SchroderTreeImpl;
+import tree.implementation.SchroderTreeUtils;
 import tree.interfaces.SchroderTree;
 
 public class WeaklyInscreasingSchroderTree {
 	public static BigInteger[] coeffs = countCoeff(100);
 	
 	public static void main(String[] args) {
-		//Arrays.stream(countCoeff(20)).forEach(x -> System.out.println(x));
-		MakeGraph.makeGraph("tree/test4.dot", unrankTree(10, coeffs[9].subtract(BigInteger.TEN)));
+		//Arrays.stream(countCoeff(100)).forEach(x -> System.out.println(x));
+		System.out.println(coeffs[15]);
+		MakeGraph.makeGraph("tree/test4.dot", unrankTree(15, new BigInteger("77777")));
+		
 		
 	}
 	
@@ -37,8 +40,8 @@ public class WeaklyInscreasingSchroderTree {
 	}
 	
 	public static SchroderTree unrankTree(int n, BigInteger s) {
-		System.out.println("UNRANK TREE: "+n+" "+s);
 		if(n == 1) return new SchroderTreeImpl();
+		
 		int k = n-1;
 		BigInteger r = s;
 		while(r.compareTo(BigInteger.ZERO) >= 0) {
@@ -46,88 +49,99 @@ public class WeaklyInscreasingSchroderTree {
 			r = r.subtract(BigIntegerMath.binomial(n-1, k-1).multiply(coeffs[k]));
 			k--;
 		}
-		
 		k++;
 		r = r.add(BigIntegerMath.binomial(n-1, k-1).multiply(coeffs[k]));
 		BigInteger sp = r.mod(coeffs[k]);
 		SchroderTree t = unrankTree(k, sp);
-		
 		List<BigInteger> C = unrankComposition(n,k,r.divideAndRemainder(coeffs[k])[0]);
-		
+		System.out.println(C);
 		substituteTree(t,C);
-		
 		return t;
 	}
 	
 	public static List<BigInteger> unrankComposition(int n, int k, BigInteger s){
 		List<BigInteger> C = new ArrayList<>();
+		//System.out.println(n+" "+k+" "+s);
 		unrankCompositionRec(n ,k, s, C);
-		System.out.println("UNRANK COMPOSITION: "+C);
 		return C;
 	}
 	
 	public static void unrankCompositionRec(int n, int k, BigInteger s, List<BigInteger> C){
-		if(n == k && s.compareTo(BigInteger.ZERO) == 0) {
+		if(n == k ) {
 			for(int i = 0; i < k; i++) {
 				C.add(BigInteger.ONE);
 			}
 			return;
 		}
-		
-		
+				
 		BigInteger s_prime = s;
-		
 		BigInteger combinaison = BigIntegerMath.binomial(n-2, k-1);
-		
-		
 		if(s_prime.compareTo(combinaison) == -1) {
 			unrankCompositionRec(n-1, k, s_prime, C);
-			C.add(new BigInteger(C.size()+1+""));
+			BigInteger newVal = C.get(C.size()-1).add(BigInteger.ONE);
+			C.remove(C.get(C.size()-1));
+			C.add(newVal);
 			
-		}
-		else {
+		}else {
 			s_prime = s_prime.subtract(combinaison);
 			unrankCompositionRec(n-1, k-1, s_prime, C);
 			C.add(BigInteger.ONE);
 			
 		}
 		
-		
 	}
 	
 	public static void  substituteTree(SchroderTree T, List<BigInteger> C) {
 		
-		if(C.size()!=0)
-			substituteTreeRec(T, C, T.getLabel(), 0);
-		else
-			System.out.println("vide");
+		if(C.size()!=0) {
+			List<SchroderTree> leaves = SchroderTreeUtils.getLeaves(T);
+			int position=0;
+			int currentLabel = SchroderTreeUtils.getCurrentLabel(T);
+			
+			for(SchroderTree leaf : leaves) {
+				BigInteger val = C.get(position);
+				if(val.compareTo(BigInteger.ONE)!=0) {
+					leaf.setisLeaf(false);
+					leaf.setLabel(currentLabel+1);
+					List<SchroderTree> children = leaf.getChildren();
+					for(BigInteger i=BigInteger.ZERO; i.compareTo(val)<0; i=i.add(BigInteger.ONE)) {
+						SchroderTree s = new SchroderTreeImpl();
+						children.add(s);
+					}
+				}
+				position++;
+			
+				
+			}
+			
+		}else {
+			System.out.println("Vide");
+		}
 		
 	}
 	
 	private static void substituteTreeRec(SchroderTree T, List<BigInteger> C, int label, int position) {
-		
 		List<SchroderTree> children = T.getChildren();
-		
 		if(T.isLeaf()) {
+			BigInteger val = C.get(position);
+			if(val.compareTo(BigInteger.ONE)==0) return;
 			T.setLabel(label);
 			T.setisLeaf(false);
-			BigInteger val = C.get(position);
+						
+			
 			for(BigInteger i=BigInteger.ZERO; i.compareTo(val)<0; i=i.add(BigInteger.ONE)) {
 				SchroderTree s = new SchroderTreeImpl();
 				children.add(s);
 			}
 			return;
 		}
-		
-		for(SchroderTree child : children) {
-			
-			substituteTreeRec(child, C, T.getLabel()+1, position++);
-			
+		else {
+			for(SchroderTree child : children) {
+				substituteTreeRec(child, C, T.getLabel()+1, position++);
+			}
 		}
-		
-		
 	}
-	
+
 	public static SchroderTree genArbre(int n){
 		if(n == 1){
 			return new SchroderTreeImpl();
@@ -153,6 +167,7 @@ public class WeaklyInscreasingSchroderTree {
 	    }
 	    return result;
 	}
+	
 	
 	
 
