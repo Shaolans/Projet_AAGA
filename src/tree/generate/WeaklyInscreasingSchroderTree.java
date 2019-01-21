@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Random;
 
 import com.google.common.math.BigIntegerMath;
 
@@ -127,6 +127,33 @@ public class WeaklyInscreasingSchroderTree {
 		
 		
 	}
+	
+	public static SchroderTree genArbre(int n){
+		if(n == 1){
+			return new SchroderTreeImpl();
+		}
+		if(n == 2){
+			List<SchroderTree> children = new ArrayList<>();
+			children.add(new SchroderTreeImpl());
+			children.add(new SchroderTreeImpl());
+			return new SchroderTreeImpl(false, 1, children);
+		}
+		BigInteger s = nextRandomBigInteger(coeffs[n]);
+		SchroderTree t = genArbre(n-1);
+		List<BigInteger> C = unrankComposition(n, n-1, s);
+		substituteTree(t, C);
+		return t;
+	}
+	
+	public static BigInteger nextRandomBigInteger(BigInteger n) {
+	    Random rand = new Random();
+	    BigInteger result = new BigInteger(n.bitLength(), rand);
+	    while( result.compareTo(n) >= 0 ) {
+	        result = new BigInteger(n.bitLength(), rand);
+	    }
+	    return result;
+	}
+	
 	
 
 }
