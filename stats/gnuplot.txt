@@ -1,0 +1,8 @@
+plot "statStrongAvgNodesTreeBuilder.txt" using 1:2 title "unrank strong" lt rgb "blue"
+replot "statWeakAvgNodesUnrank.txt" using 1:2 title "unrank weak" lt rgb "red"
+avg(x) = x - log(x)
+replot avg(x) title 'f(x) = x-log(x)' lt rgb "green"
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_nodes.png"
+set title "Average of internal nodes, x = Schroder Tree size, y = average (on 100 trees)"
+replot
