@@ -20,6 +20,38 @@ public class WeaklyInscreasingSchroderTree {
 		coeffs = countCoeff(nb_comptage);
 	}
 	
+	
+	/*
+	 * Fonction qui ne sert pas, calcul le nombre de Bell
+	 * mais ne calcul pas le nombre ORDONNEE de Bell...
+	 */
+	public static BigInteger[] bellTriangle(int n) {
+		BigInteger[] bell = new BigInteger[n+1];
+		bell[0] = BigInteger.ZERO;
+		bell[1] = BigInteger.ONE;
+		bell[2] = BigInteger.ONE;
+		BigInteger[] firstrow = new BigInteger[1];
+		firstrow[0] = BigInteger.ONE;
+		BigInteger[] secondrow = new BigInteger[2];
+		secondrow[0] = BigInteger.ONE;
+		BigInteger[] tmp;
+		for(int i = 3; i < n+1; i++) {
+			for(int j = 0; j < firstrow.length; j++) {
+				secondrow[j+1] = firstrow[j].add(secondrow[j]);
+				if(j == firstrow.length-1) {
+					tmp = new BigInteger[secondrow.length+1];
+					firstrow = secondrow;
+					tmp[0] = secondrow[j+1];
+					secondrow = tmp;
+					bell[i] = tmp[0];
+					break;
+				}
+			}
+		}
+		return bell;
+	}
+	
+	
 	public BigInteger[] countCoeff(int n) {
 		BigInteger count[] = new BigInteger[n+1];
 		count[0] = BigInteger.ZERO;
@@ -168,14 +200,16 @@ public class WeaklyInscreasingSchroderTree {
 	}
 
 	public static void main(String[] args) {
+		
 		WeaklyInscreasingSchroderTree winst = new WeaklyInscreasingSchroderTree(1001);
 		MakeGraph.makeGraph("tree/test9.dot", winst.treeBuilder(30));
 		MakeGraph.makeGraph("tree/test10.dot", winst.unrankTree(30, 
 				SchroderTreeUtils.nextRandomBigInteger(
 						winst.getComptage()[30].subtract(BigInteger.ONE))));
+		
 	}
 
-	
+
 	
 	
 
