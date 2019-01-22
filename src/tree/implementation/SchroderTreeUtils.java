@@ -1,7 +1,9 @@
 package tree.implementation;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import tree.interfaces.SchroderTree;
 
@@ -15,11 +17,12 @@ public class SchroderTreeUtils {
 	
 	private static void getLeavesRec(SchroderTree T, List<SchroderTree>leaves) {
 		
-		if(T.isLeaf())
+		if(T.isLeaf()) {
 			leaves.add(T);
-		else
+		} else {
 			for(SchroderTree child : T.getChildren())
 				getLeavesRec(child, leaves);
+		}
 		
 	}
 	
@@ -56,4 +59,13 @@ public class SchroderTreeUtils {
 		return size;
 	}
 
+	
+	public static BigInteger nextRandomBigInteger(BigInteger n) {
+	    Random rand = new Random();
+	    BigInteger result = new BigInteger(n.bitLength(), rand);
+	    while( result.compareTo(n) >= 0 ) {
+	        result = new BigInteger(n.bitLength(), rand);
+	    }
+	    return result;
+	}
 }

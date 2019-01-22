@@ -14,18 +14,13 @@ import tree.implementation.SchroderTreeUtils;
 import tree.interfaces.SchroderTree;
 
 public class WeaklyInscreasingSchroderTree {
-	public static BigInteger[] coeffs = countCoeff(100);
+	private BigInteger[] coeffs;
 	
-	public static void main(String[] args) {
-		//Arrays.stream(countCoeff(100)).forEach(x -> System.out.println(x));
-		//MakeGraph.makeGraph("tree/test4.dot", unrankTree(25, new BigInteger("9458653845834583458123123")));
-		for(int i = 0; i < 1; i++) {
-			SchroderTree t = genArbre(25);
-			MakeGraph.makeGraph("tree/test5.dot", t);
-		}
+	public WeaklyInscreasingSchroderTree(int nb_comptage) {
+		coeffs = countCoeff(nb_comptage);
 	}
 	
-	public static BigInteger[] countCoeff(int n) {
+	public BigInteger[] countCoeff(int n) {
 		BigInteger count[] = new BigInteger[n+1];
 		count[0] = BigInteger.ZERO;
 		count[1] = BigInteger.ONE;
@@ -40,7 +35,7 @@ public class WeaklyInscreasingSchroderTree {
 		return count;
 	}
 	
-	public static SchroderTree unrankTree(int n, BigInteger s) {
+	public SchroderTree unrankTree(int n, BigInteger s) {
 		if(n == 1) return new SchroderTreeImpl();
 		
 		int k = n-1;
@@ -119,29 +114,8 @@ public class WeaklyInscreasingSchroderTree {
 		
 	}
 	
-	private static void substituteTreeRec(SchroderTree T, List<BigInteger> C, int label, int position) {
-		List<SchroderTree> children = T.getChildren();
-		if(T.isLeaf()) {
-			BigInteger val = C.get(position);
-			if(val.compareTo(BigInteger.ONE)==0) return;
-			T.setLabel(label);
-			T.setisLeaf(false);
-						
-			
-			for(BigInteger i=BigInteger.ZERO; i.compareTo(val)<0; i=i.add(BigInteger.ONE)) {
-				SchroderTree s = new SchroderTreeImpl();
-				children.add(s);
-			}
-			return;
-		}
-		else {
-			for(SchroderTree child : children) {
-				substituteTreeRec(child, C, T.getLabel()+1, position++);
-			}
-		}
-	}
 
-	public static SchroderTree genArbre(int n){
+	public SchroderTree treeBuilder(int n){
 		if(n == 1){
 			return new SchroderTreeImpl();
 		}
@@ -157,8 +131,8 @@ public class WeaklyInscreasingSchroderTree {
 		SchroderTree lastadded = t;
 		int l = 3;
 		for(int i = 3; i <= n; i++) {
-			BigInteger s = nextRandomBigInteger(BigIntegerMath.binomial(i-1, i-2));
-			BigInteger value = nextRandomBigInteger(s.add(BigInteger.ONE));
+			BigInteger s = SchroderTreeUtils.nextRandomBigInteger(BigIntegerMath.binomial(i-1, i-2));
+			BigInteger value = SchroderTreeUtils.nextRandomBigInteger(s.add(BigInteger.ONE));
 			List<BigInteger> C = unrankComposition(i, i-1, s);
 			tmp = new ArrayList<>();
 			if(value.compareTo(s) == 0) {
@@ -187,16 +161,20 @@ public class WeaklyInscreasingSchroderTree {
 		}
 		return t;
 	}
-
 	
-	public static BigInteger nextRandomBigInteger(BigInteger n) {
-	    Random rand = new Random();
-	    BigInteger result = new BigInteger(n.bitLength(), rand);
-	    while( result.compareTo(n) >= 0 ) {
-	        result = new BigInteger(n.bitLength(), rand);
-	    }
-	    return result;
+	
+	public BigInteger[] getComptage() {
+		return coeffs;
 	}
+
+	public static void main(String[] args) {
+		WeaklyInscreasingSchroderTree winst = new WeaklyInscreasingSchroderTree(1001);
+		MakeGraph.makeGraph("tree/test9.dot", winst.treeBuilder(30));
+		MakeGraph.makeGraph("tree/test10.dot", winst.unrankTree(30, 
+				SchroderTreeUtils.nextRandomBigInteger(
+						winst.getComptage()[30].subtract(BigInteger.ONE))));
+	}
+
 	
 	
 	
