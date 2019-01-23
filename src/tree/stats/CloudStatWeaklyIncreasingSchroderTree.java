@@ -11,7 +11,7 @@ import tree.generate.WeaklyInscreasingSchroderTree;
 import tree.implementation.SchroderTreeUtils;
 import tree.interfaces.SchroderTree;
 
-public class CloudStatWeaklyIncreasingSchroderTree2 {
+public class CloudStatWeaklyIncreasingSchroderTree {
 	public static void main(String[] args) {
 		final int AVG = 50;
 		final int MAX_NODES = 1000;
