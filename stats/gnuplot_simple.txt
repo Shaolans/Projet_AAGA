@@ -1,0 +1,5 @@
+plot "cloudstatWeakAvgNodesTreeBuilder.txt" using 1:2 title "unrank strong" lt rgb "blue" pt 7 ps 0.1
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_nodes.png"
+set title "Title"
+replot
