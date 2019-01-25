@@ -1,8 +1,142 @@
-plot "statStrongAvgNodesTreeBuilder.txt" using 1:2 title "unrank strong" lt rgb "blue"
-replot "statWeakAvgNodesUnrank.txt" using 1:2 title "unrank weak" lt rgb "red"
+plot "statStrongAvgNodesUnrank.txt" using 1:2 title "unrank strong" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_nodes_strong_unrank.png"
+set title "Average of internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "statStrongAvgNodesTreeBuilder.txt" using 1:2 title "treebuilder strong" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720 
+set output "stats_avg_nodes_strong_treebuilder.png"
+set title "Average of internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+plot "statWeakAvgNodesUnrank.txt" using 1:2 title "unrank weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_nodes_weak_unrank.png"
+set title "Average of internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "statWeakAvgNodesTreeBuilder.txt" using 1:2 title "treebuilder weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_nodes_weak_treebuilder.png"
+set title "Average of internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+
+
+
+plot "statStrongAvgHeightUnrank.txt" using 1:2 title "unrank strong" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_height_strong_unrank.png"
+set title "Average of height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "statStrongAvgHeightTreeBuilder.txt" using 1:2 title "treebuilder strong" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720 
+set output "stats_avg_height_strong_treebuilder.png"
+set title "Average of height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+plot "statWeakAvgHeightUnrank.txt" using 1:2 title "unrank weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_height_weak_unrank.png"
+set title "Average of height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "statWeakAvgHeightTreeBuilder.txt" using 1:2 title "treebuilder weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "stats_avg_height_weak_treebuilder.png"
+set title "Average of height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+plot "cloudstatStrongAvgNodesUnrank.txt" using 1:2 title "unrank strong" lt rgb "blue" pt 7 ps 0.5
 avg(x) = x - log(x)
 replot avg(x) title 'f(x) = x-log(x)' lt rgb "green"
 set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
-set output "stats_avg_nodes.png"
-set title "Average of internal nodes, x = Schroder Tree size, y = average (on 100 trees)"
+set output "cloudstats_avg_nodes_strong_unrank.png"
+set title "Internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
 replot
+
+plot "cloudstatStrongAvgNodesTreeBuilder.txt" using 1:2 title "treebuilder strong" lt rgb "blue" pt 7 ps 0.5
+avg(x) = x - log(x)
+replot avg(x) title 'f(x) = x-log(x)' lt rgb "green"
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720 
+set output "cloudstats_avg_nodes_strong_treebuilder.png"
+set title "Internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+plot "cloudstatWeakAvgNodesUnrank.txt" using 1:2 title "unrank weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "cloudstats_avg_nodes_weak_unrank.png"
+set title "Internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "cloudstatWeakAvgNodesTreeBuilder.txt" using 1:2 title "treebuilder weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "cloudstats_avg_nodes_weak_treebuilder.png"
+set title "Internal nodes, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+
+
+
+plot "cloudstatStrongAvgHeightUnrank.txt" using 1:2 title "unrank strong" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "cloudstats_avg_height_strong_unrank.png"
+set title "Height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "cloudstatStrongAvgHeightTreeBuilder.txt" using 1:2 title "treebuilder strong" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720 
+set output "cloudstats_avg_height_strong_treebuilder.png"
+set title "Height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+plot "cloudstatWeakAvgHeightUnrank.txt" using 1:2 title "unrank weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "cloudstats_avg_height_weak_unrank.png"
+set title "Height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+plot "cloudstatWeakAvgHeightTreeBuilder.txt" using 1:2 title "treebuilder weak" lt rgb "blue" pt 7 ps 0.5
+set terminal pngcairo enhanced font "Times New Roman,12.0" size 1280,720
+set output "cloudstats_avg_height_weak_treebuilder.png"
+set title "Height, x = Schroder Tree size, y = average (on 50 trees)"
+replot
+
+
+
+
