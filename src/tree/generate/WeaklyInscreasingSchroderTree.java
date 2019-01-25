@@ -161,7 +161,7 @@ public class WeaklyInscreasingSchroderTree {
 		List<SchroderTree> leaves = new ArrayList<>(children);
 		List<SchroderTree> tmp;
 		SchroderTree lastadded = t;
-		int l = 3;
+		int l = 2;
 		for(int i = 3; i <= n; i++) {
 			BigInteger s = SchroderTreeUtils.nextRandomBigInteger(BigIntegerMath.binomial(i-1, i-2));
 			BigInteger value = SchroderTreeUtils.nextRandomBigInteger(s.add(BigInteger.ONE));
@@ -174,6 +174,7 @@ public class WeaklyInscreasingSchroderTree {
 				for(int j = 0; j < leaves.size(); j++) {
 					BigInteger nb = C.get(j);
 					if(nb.compareTo(BigInteger.ONE) != 0) {
+						l++;
 						SchroderTree tmptree = leaves.get(j);
 						lastadded = tmptree;
 						tmptree.setisLeaf(false);
@@ -184,12 +185,12 @@ public class WeaklyInscreasingSchroderTree {
 							leaf.setLabel(l);
 						}
 					}else {
+						leaves.get(j).setLabel(l);
 						tmp.add(leaves.get(j));
 					}
 				}
 				leaves = tmp;
 			}
-			l++;
 		}
 		return t;
 	}
