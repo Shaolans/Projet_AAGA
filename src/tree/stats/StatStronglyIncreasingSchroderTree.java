@@ -12,10 +12,10 @@ import tree.interfaces.SchroderTree;
 
 public class StatStronglyIncreasingSchroderTree {
 	public static void main(String[] args) {
-		final int AVG = 100;
-		final int MAX_NODES = 5000;
-		final int PADDING = 100;
-		StronglyIncreasingSchroderTree sist = new StronglyIncreasingSchroderTree(5001);
+		final int AVG = 50;
+		final int MAX_NODES = 2000;
+		final int PADDING = 10;
+		StronglyIncreasingSchroderTree sist = new StronglyIncreasingSchroderTree(2001);
 		StringBuilder statAvgNodesTreeBuilder = new StringBuilder();
 		StringBuilder statAvgNodesUnrank = new StringBuilder();
 		StringBuilder statAvgHeightTreeBuilder = new StringBuilder();

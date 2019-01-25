@@ -14,9 +14,9 @@ import tree.interfaces.SchroderTree;
 public class CloudStatWeaklyIncreasingSchroderTree {
 	public static void main(String[] args) {
 		final int AVG = 50;
-		final int MAX_NODES = 1000;
+		final int MAX_NODES = 2000;
 		final int PADDING = 10;
-		WeaklyInscreasingSchroderTree sist = new WeaklyInscreasingSchroderTree(1001);
+		WeaklyInscreasingSchroderTree sist = new WeaklyInscreasingSchroderTree(2001);
 		StringBuilder statAvgNodesTreeBuilder = new StringBuilder();
 		StringBuilder statAvgNodesUnrank = new StringBuilder();
 		StringBuilder statAvgHeightTreeBuilder = new StringBuilder();
