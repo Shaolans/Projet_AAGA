@@ -97,12 +97,16 @@ replot
 
 
 plot "cloudstatWeakAvgNodesUnrank.txt" using 1:2 title "unrank weak" lt rgb "blue" pt 7 ps 0.5
+avg(x) = x - log(x) - 0.57721 + 0.5
+replot avg(x) title 'f(x) = x-log(x)-0.57721+(1/2)' lt rgb "green"
 set terminal pngcairo enhanced font "Times New Roman,12.0"
 set output "cloudstats_avg_nodes_weak_unrank.png"
 set title "Internal nodes, x = Schroder Tree size, y = number of internal nodes (50 trees)"
 replot
 
 plot "cloudstatWeakAvgNodesTreeBuilder.txt" using 1:2 title "treebuilder weak" lt rgb "blue" pt 7 ps 0.5
+avg(x) = x - log(x) - 0.57721 + 0.5
+replot avg(x) title 'f(x) = x-log(x)-0.57721+(1/2)' lt rgb "green"
 set terminal pngcairo enhanced font "Times New Roman,12.0"
 set output "cloudstats_avg_nodes_weak_treebuilder.png"
 set title "Internal nodes, x = Schroder Tree size, y = number of internal nodes (50 trees)"
