@@ -163,14 +163,14 @@ public class WeaklyInscreasingSchroderTree {
 		SchroderTree lastadded = t;
 		int l = 2;
 		for(int i = 3; i <= n; i++) {
-			BigInteger s = SchroderTreeUtils.nextRandomBigInteger(BigIntegerMath.binomial(i-1, i-2));
+			BigInteger s = BigIntegerMath.binomial(i-1, i-2);
 			BigInteger value = SchroderTreeUtils.nextRandomBigInteger(s.add(BigInteger.ONE));
-			List<BigInteger> C = unrankComposition(i, i-1, s);
 			tmp = new ArrayList<>();
 			if(value.compareTo(s) == 0) {
 				lastadded.getChildren().add(new SchroderTreeImpl(true, l, new ArrayList<>()));
 				leaves = SchroderTreeUtils.getLeaves(t);
 			}else {
+				List<BigInteger> C = unrankComposition(i, i-1, value);
 				for(int j = 0; j < leaves.size(); j++) {
 					BigInteger nb = C.get(j);
 					if(nb.compareTo(BigInteger.ONE) != 0) {
